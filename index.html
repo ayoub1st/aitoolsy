@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Toolsy — Welcome</title>
+<link rel="stylesheet" href="assets/landing.css" />
+</head>
+<body>
+
+  <div class="hero">
+
+    <div class="hero-brand">
+      <span class="hero-brand-ai">Ai</span><span class="hero-brand-name">Toolsy</span>
+    </div>
+
+    <!-- Mobile-only: hamburger over the image, opens the same nav + language options -->
+    <div class="hero-menu">
+      <button type="button" class="hero-menu-btn" id="hero-menu-btn" aria-label="Open menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+      <div class="hero-menu-panel" id="hero-menu-panel" hidden>
+        <a href="guide.html" class="hero-menu-link" data-i18n="nav.home">Home</a>
+        <a href="blog.html" class="hero-menu-link" data-i18n="nav.blog">Blog</a>
+        <a href="faq.html" class="hero-menu-link" data-i18n="nav.faq.short">FAQ</a>
+        <a href="about.html" class="hero-menu-link" data-i18n="nav.about">About Us</a>
+        <a href="games.html" class="hero-menu-link" data-i18n="nav.games">Games</a>
+        <div class="hero-menu-lang-label" data-i18n="nav.languages">Languages</div>
+        <button type="button" class="hero-lang-option" data-lang="en">English</button>
+        <button type="button" class="hero-lang-option" data-lang="fr">Français</button>
+        <button type="button" class="hero-lang-option" data-lang="ar">العربية</button>
+        <button type="button" class="hero-lang-option" data-lang="de">Deutsch</button>
+        <button type="button" class="hero-lang-option" data-lang="es">Español</button>
+      </div>
+    </div>
+
+    <!-- Right: nav + content, overlaid on the white side of the background image -->
+    <div class="hero-content">
+      <nav class="hero-nav">
+        <a href="guide.html" class="hero-nav-link active" data-i18n="nav.home">Home</a>
+        <a href="blog.html" class="hero-nav-link" data-i18n="nav.blog">Blog</a>
+        <a href="faq.html" class="hero-nav-link" data-i18n="nav.faq.short">FAQ</a>
+        <a href="about.html" class="hero-nav-link" data-i18n="nav.about">About Us</a>
+        <a href="games.html" class="hero-nav-link" data-i18n="nav.games">Games</a>
+        <div class="hero-lang">
+          <button type="button" class="hero-nav-link hero-lang-btn" id="hero-lang-btn">
+            <span data-i18n="nav.languages">Languages</span> <span class="hero-lang-caret">▾</span>
+          </button>
+          <div class="hero-lang-menu" id="hero-lang-menu" hidden>
+            <button type="button" class="hero-lang-option" data-lang="en">English</button>
+            <button type="button" class="hero-lang-option" data-lang="fr">Français</button>
+            <button type="button" class="hero-lang-option" data-lang="ar">العربية</button>
+            <button type="button" class="hero-lang-option" data-lang="de">Deutsch</button>
+            <button type="button" class="hero-lang-option" data-lang="es">Español</button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="hero-main">
+        <p class="hero-eyebrow" data-i18n="landing.welcome.eyebrow">Welcome to</p>
+        <h1 class="hero-title">AI TOOLSY</h1>
+        <p class="hero-tagline" data-i18n="landing.tagline">One platform. Endless tools.</p>
+        <p class="hero-desc" data-i18n="landing.welcome.subtitle">Discover, compare, and choose from 200+ the best AI tools across all categories. Your space. Your toolkit. Your productivity.</p>
+
+        <a href="guide.html" class="get-started-btn">
+          <span data-i18n="landing.getstarted">Get Started</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12"></line>
+            <polyline points="13 5 20 12 13 19"></polyline>
+          </svg>
+        </a>
+
+        <div class="featured-tools" aria-label="Featured tools">
+          <div class="featured-tools-track" id="featured-tools-track"></div>
+        </div>
+
+        <!-- Mobile-only: simple static row instead of the animated rail -->
+        <div class="hero-features-static">
+          <div class="hero-feature-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="7" width="12" height="10" rx="4"/><circle cx="9.5" cy="12" r="1"/><circle cx="14.5" cy="12" r="1"/><path d="M12 7V4M9 4h6"/></svg>
+            <span>+200 Tools</span>
+          </div>
+          <div class="hero-feature-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+            <span>All Categories</span>
+          </div>
+          <div class="hero-feature-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
+            <span>Find, Compare &amp; Choose</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="assets/i18n.js"></script>
+  <script src="assets/landing.js"></script>
+  <script src="assets/motion.js"></script>
+</body>
+</html>

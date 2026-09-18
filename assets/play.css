@@ -1,0 +1,199 @@
+.play-content-wrap { max-width: 900px; }
+
+/* This is a focused play surface — the long site footer just pushes the
+   board below the fold, so it stays off this page. */
+.site-footer { display: none; }
+
+.play-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.play-title {
+  margin: 0 0 12px;
+  text-align: center;
+  font-size: clamp(19px, 3vw, 28px);
+  font-weight: 800;
+  background: linear-gradient(120deg, #16213A 0%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -.01em;
+}
+
+.play-mount {
+  position: relative;
+  background: #fff;
+  border: 1.5px solid #E4EAF3;
+  border-radius: 28px;
+  padding: clamp(16px, 3vw, 36px);
+  box-shadow: 0 10px 34px rgba(16, 24, 40, .08);
+  min-height: min(420px, 60vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+  animation: playMountIn .45s cubic-bezier(.22,1,.36,1);
+}
+.play-mount::before,
+.play-mount::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(2px);
+}
+.play-mount::before {
+  width: 220px; height: 220px;
+  top: -90px; left: -90px;
+  background: radial-gradient(circle, rgba(24,87,196,.10) 0%, transparent 70%);
+}
+.play-mount::after {
+  width: 260px; height: 260px;
+  bottom: -110px; right: -110px;
+  background: radial-gradient(circle, rgba(124,58,237,.08) 0%, transparent 70%);
+}
+.play-mount > * { width: 100%; }
+
+@keyframes playMountIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.game-mode-row,
+.memory-setup,
+.game-status { justify-content: center; text-align: center; }
+.game-mode-row { justify-content: center; }
+
+/* ---------- 4 in a Row ---------- */
+.c4-wrap { display: flex; flex-direction: column; align-items: center; }
+.c4-board {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  max-width: min(520px, 58vh, 92vw);
+  background: linear-gradient(160deg, var(--blue), var(--blue-dark, #0f3d8f));
+  border-radius: 18px;
+  padding: 12px;
+  box-shadow: 0 14px 30px rgba(16,24,40,.14);
+}
+.c4-cell {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.16);
+  cursor: pointer;
+  transition: background .15s ease, transform .1s ease;
+}
+.c4-cell:hover:not(.filled) { background: rgba(255,255,255,.3); }
+.c4-cell.filled { cursor: default; }
+.c4-cell.x { background: radial-gradient(circle at 35% 30%, #FF7A7A, #EF4444 65%); box-shadow: inset 0 -4px 6px rgba(0,0,0,.2), 0 3px 8px rgba(0,0,0,.25); animation: c4Drop .28s cubic-bezier(.34,1.56,.64,1); }
+.c4-cell.o { background: radial-gradient(circle at 35% 30%, #FFE27A, #FACC15 65%); box-shadow: inset 0 -4px 6px rgba(0,0,0,.2), 0 3px 8px rgba(0,0,0,.25); animation: c4Drop .28s cubic-bezier(.34,1.56,.64,1); }
+
+@keyframes c4Drop {
+  from { transform: scale(.35); opacity: .4; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ---------- Dots and Boxes ---------- */
+.dots-wrap { display: flex; flex-direction: column; align-items: center; }
+.dots-board {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  gap: 0;
+  width: 100%;
+  max-width: min(420px, 54vh, 92vw);
+  aspect-ratio: 1;
+  padding: 6px;
+}
+.dots-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #16213A;
+  justify-self: center; align-self: center;
+  z-index: 2;
+}
+.dots-line {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+.dots-line.h { justify-self: stretch; align-self: center; height: 8px; margin: 0 2px; border-radius: 4px; }
+.dots-line.v { justify-self: center; align-self: stretch; width: 8px; margin: 2px 0; border-radius: 4px; }
+.dots-line::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 4px;
+  background: #E4EAF3;
+  transition: background .15s ease;
+}
+.dots-line:hover::before { background: #C9D7EF; }
+.dots-line.drawn::before { background: var(--blue); }
+.dots-line.drawn.player-x::before { background: var(--blue); }
+.dots-line.drawn.player-o::before { background: #E53E3E; }
+.dots-box {
+  background: transparent;
+  border-radius: 4px;
+  transition: background .2s ease;
+}
+.dots-box.owned.mine { background: rgba(24, 87, 196, .16); }
+.dots-box.owned.theirs { background: rgba(229, 62, 62, .16); }
+
+/* ---------- Shared win/lose result overlay (Connect Four etc.) ---------- */
+.game-result-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(12, 18, 34, .48);
+  backdrop-filter: blur(3px);
+  cursor: pointer;
+  animation: resultFadeIn .25s ease;
+}
+.game-result-overlay.fade-out { animation: resultFadeOut .45s ease forwards; }
+@keyframes resultFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes resultFadeOut { to { opacity: 0; } }
+
+.game-result-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 28px 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 24px 60px rgba(8, 14, 30, .35);
+  cursor: default;
+  animation: resultCardIn .38s cubic-bezier(.34, 1.56, .64, 1);
+}
+@keyframes resultCardIn {
+  from { transform: scale(.7) translateY(16px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.game-result-line {
+  margin: 2px 0;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -.01em;
+}
+.game-result-line.win { color: var(--blue); }
+.game-result-line.lose { color: #E53E3E; }
+
+@media (max-width: 600px) {
+  .play-mount { padding: 18px 12px; min-height: 320px; }
+  .dots-dot { width: 9px; height: 9px; }
+  .game-result-card { padding: 22px 26px 20px; border-radius: 18px; }
+  .game-result-line { font-size: 18px; }
+}

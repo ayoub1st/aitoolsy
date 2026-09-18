@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Toolsy — Your Space Toolkit Guide</title>
+<link rel="stylesheet" href="assets/nav.css" />
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body data-current="guide">
+
+  <header class="app-topbar">
+    <a href="guide.html" class="brand-lockup">
+      <span class="brand-avatar">
+        <img src="assets/media/logo-mark.png" alt="AI Toolsy" />
+      </span>
+      <span class="brand-name"><span class="brand-ai">Ai</span><span class="brand-rest">Toolsy</span></span>
+    </a>
+    <button id="menu-btn" class="menu-btn" type="button" aria-label="Open menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </header>
+
+  <div id="drawer-overlay" class="drawer-overlay" hidden></div>
+  <aside id="drawer" class="drawer" hidden>
+    <div class="drawer-header">
+      <img src="assets/media/logo-mark.png" alt="AI Toolsy" />
+      <span class="brand-name"><span class="brand-ai">Ai</span><span class="brand-rest">Toolsy</span></span>
+      <button id="drawer-close" class="drawer-close" type="button" aria-label="Close menu">&times;</button>
+    </div>
+
+    <button class="drawer-item" data-page="guide" data-i18n="nav.home">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      Home
+    </button>
+    <button class="drawer-item" data-page="blog" data-i18n="nav.blog">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="17" y2="13"/><line x1="7" y1="17" x2="12" y2="17"/></svg>
+      Blog
+    </button>
+    <button class="drawer-item" data-page="bookmarks" data-i18n="nav.bookmarks">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18l-6-4-6 4V3z"/></svg>
+      Bookmarks
+    </button>
+    <button class="drawer-item" data-page="faq" data-i18n="nav.faq">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.7-2.5 1.9-2.5 3.6"/><line x1="12" y1="16.5" x2="12" y2="16.6"/></svg>
+      FAQ / Help Center
+    </button>
+
+    <button class="drawer-item" data-page="games" data-i18n="nav.games">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="12" r="1.4"/><circle cx="15.5" cy="10" r="1.4"/><circle cx="15.5" cy="14" r="1.4"/></svg>
+      Games
+    </button>
+
+    <div class="drawer-section">
+      <button class="drawer-item" id="lang-toggle" type="button">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3c2.5 2.6 4 6 4 9s-1.5 6.4-4 9c-2.5-2.6-4-6-4-9s1.5-6.4 4-9z"/></svg>
+        <span data-i18n="nav.languages">Languages</span>
+        <span class="plus">+</span>
+      </button>
+      <div class="drawer-sub" id="lang-list">
+        <button class="drawer-sub-item lang-option" data-lang="en">English</button>
+        <button class="drawer-sub-item lang-option" data-lang="fr">Français</button>
+        <button class="drawer-sub-item lang-option" data-lang="ar">العربية</button>
+        <button class="drawer-sub-item lang-option" data-lang="de">Deutsch</button>
+        <button class="drawer-sub-item lang-option" data-lang="es">Español</button>
+      </div>
+    </div>
+
+    <div class="drawer-spacer"></div>
+
+    <div class="drawer-bottom">
+      <button class="drawer-item" data-page="about" data-i18n="nav.about">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="7.5" x2="12" y2="7.6"/></svg>
+        About Us
+      </button>
+      <button class="drawer-item" id="support-toggle" type="button">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-6H5a1 1 0 0 0-1 1z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-6h1a1 1 0 0 1 1 1z"/></svg>
+        <span data-i18n="nav.support">Support</span>
+        <span class="plus">+</span>
+      </button>
+      <div class="drawer-sub" id="support-list">
+        <div class="drawer-sub-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          <span>Email (to be added)</span>
+        </div>
+        <div class="drawer-sub-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 8h-2a2 2 0 0 0-2 2v2H9v3h2v7h3v-7h2.2L17 13h-3v-1.5c0-.6.4-1 1-1h2V8z"/></svg>
+          <span>Facebook (coming soon)</span>
+        </div>
+        <div class="drawer-sub-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          <span>Instagram (coming soon)</span>
+        </div>
+        <div class="drawer-sub-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v10.5a3.5 3.5 0 1 1-3-3.46"/><path d="M14 3c.5 2.5 2.3 4.2 5 4.5"/></svg>
+          <span>TikTok (coming soon)</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="page-wrap">
+
+    <div class="guide-header">
+      <div class="guide-title-wrap">
+        <span class="title-wrap">
+          <h1 class="app-title-h1-reset">
+            <img class="app-title-banner" id="app-title-img" src="assets/media/title-banner.png" alt="Your Space Toolkit Guide" />
+          </h1>
+        </span>
+      </div>
+      <div class="search-wrap">
+        <button id="search-icon" class="search-icon" type="button" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.2" y2="16.2"></line>
+          </svg>
+        </button>
+        <input id="search-input" class="search-input" type="text" placeholder="Find what you need" autocomplete="off" />
+      </div>
+      <p id="search-status" class="search-status" hidden></p>
+    </div>
+
+    <main>
+      <!-- Level 1: fields/domains overview -->
+      <div id="domains-page">
+        <div class="categories-heading">
+          <div>
+            <h2><span class="domain-page-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg></span>Explore by Field</h2>
+            <p>Pick a field to see the tool categories inside it.</p>
+          </div>
+          <span class="categories-total" id="domains-total"></span>
+        </div>
+        <div id="domains-grid" class="domain-grid"></div>
+      </div>
+
+      <!-- Level 2: categories inside one field -->
+      <div id="domain-page" hidden>
+        <button class="back-btn" id="domain-back-btn" type="button">
+          <span aria-hidden="true">←</span> All fields
+        </button>
+
+        <div class="categories-heading">
+          <div>
+            <h2 id="domain-page-title">&nbsp;</h2>
+            <p id="domain-page-desc">&nbsp;</p>
+          </div>
+          <div class="controls-row">
+            <div class="sort-control" id="sort-control">
+              <button class="sort-btn" id="sort-btn" type="button">
+                <span class="sort-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="14" y2="6"></line><line x1="4" y1="12" x2="11" y2="12"></line><line x1="4" y1="18" x2="8" y2="18"></line><polyline points="17 4 17 20"></polyline><polyline points="13 16 17 20 21 16"></polyline></svg></span>
+                <span id="sort-label">Sort</span>
+                <span class="sort-chevron" aria-hidden="true"></span>
+              </button>
+              <div class="sort-dropdown" id="sort-dropdown">
+                <button class="sort-option active" data-sort="default">
+                  <span class="sort-option-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg></span>
+                  <span>Default order</span>
+                  <span class="sort-option-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                </button>
+                <button class="sort-option" data-sort="alpha">
+                  <span class="sort-option-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15l3-8 3 8"></path><path d="M4.8 13h4.4"></path><path d="M14 7h6l-6 10h6"></path></svg></span>
+                  <span>Alphabetical (A–Z)</span>
+                  <span class="sort-option-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                </button>
+                <button class="sort-option" data-sort="used">
+                  <span class="sort-option-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 5 14h6l-1 8 9-13h-6z"></path></svg></span>
+                  <span>Most used</span>
+                  <span class="sort-option-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                </button>
+                <button class="sort-option" data-sort="rated">
+                  <span class="sort-option-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><polygon points="12 2.5 15.1 8.8 22 9.8 17 14.7 18.2 21.6 12 18.3 5.8 21.6 7 14.7 2 9.8 8.9 8.8"></polygon></svg></span>
+                  <span>Top rated fields</span>
+                  <span class="sort-option-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="grid" class="grid"></div>
+      </div>
+
+      <!-- Level 3: a single category's tools -->
+      <div id="category-page" hidden>
+        <button class="back-btn" id="category-back-btn" type="button">
+          <span aria-hidden="true">←</span> <span id="category-back-label">Back to categories</span>
+        </button>
+
+        <div class="category-hero" id="category-hero">
+          <img class="category-hero-img" id="category-hero-img" alt="" />
+          <button type="button" class="category-hero-bookmark" id="category-hero-bookmark" aria-label="Save category">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1z"/></svg>
+          </button>
+          <div class="category-hero-shade"></div>
+          <div class="category-hero-text">
+            <h2 id="category-hero-title">&nbsp;</h2>
+            <p id="category-hero-desc">&nbsp;</p>
+          </div>
+        </div>
+
+        <h3 class="tool-banners-heading" id="tool-banners-heading">Tools</h3>
+        <div id="tool-banners"></div>
+      </div>
+    </main>
+
+  </div>
+
+  <footer class="site-footer">
+    <span>&copy; AMA</span>
+  </footer>
+
+
+  <script src="assets/data.js"></script>
+  <script src="assets/domains.js"></script>
+  <script src="assets/content-translations.js"></script>
+  <script src="assets/content-i18n.js"></script>
+  <script src="assets/i18n.js"></script>
+  <script src="assets/script.js"></script>
+  <script src="assets/nav.js"></script>
+  <script src="assets/motion.js"></script>
+</body>
+</html>

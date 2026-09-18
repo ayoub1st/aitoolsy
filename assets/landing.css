@@ -1,0 +1,448 @@
+:root {
+  --blue: #1857c4;
+  --blue-dark: #0f3d8f;
+  --royal-blue: #1e3ec8;
+  --cream: #FBF3E3;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* the intro is exactly one screen — no scrolling in any direction, on any device */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  opacity: 0;
+  transition: opacity .28s ease;
+}
+html.page-ready body {
+  opacity: 1;
+}
+
+/* ---------- Hero: fills exactly one screen, no scrolling ----------
+   width:100vw + height:100vh with background-size:cover means the hero
+   always matches the visible screen exactly, at any window size — the
+   trade-off is the image crops slightly top/bottom on most desktop
+   monitors (which are wider than the image itself), not the person
+   having to scroll to see the rest of it. */
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background-image: url("media/hero-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 42% center;
+  overflow: hidden;
+}
+
+.hero-brand {
+  position: absolute;
+  top: clamp(16px, 2.6vh, 32px);
+  left: clamp(16px, 2.2vw, 36px);
+  z-index: 3;
+  font-size: clamp(18px, 1.7vw, 26px);
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+.hero-brand-ai { color: #4fa6ff; }
+.hero-brand-name { color: #f4f8ff; }
+
+/* -------- Content overlay, sitting on the image's white side --------
+   Positioned with % so it tracks the image's own boundary at any size. */
+.hero-content {
+  position: absolute;
+  top: 0;
+  left: 53%;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+  direction: ltr; /* keep this panel's own layout fixed even when the page is set to Arabic/RTL */
+}
+
+.hero-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(14px, 1.8vw, 34px);
+  padding: clamp(18px, 2.6vh, 30px) clamp(20px, 2.6vw, 48px);
+}
+
+.hero-nav-link {
+  color: #1B2437;
+  font-size: clamp(11.5px, 0.95vw, 14px);
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+  position: relative;
+  white-space: nowrap;
+}
+
+.hero-nav-link.active { color: var(--blue); }
+
+.hero-nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 2px;
+  background: var(--blue);
+}
+
+.hero-lang { position: relative; margin-left: auto; }
+
+.hero-lang-caret { font-size: .8em; margin-left: 2px; }
+
+.hero-lang-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  min-width: 150px;
+  background: #ffffff;
+  border: 1px solid #E4EAF3;
+  border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(20, 30, 60, .16);
+  padding: 6px;
+  z-index: 20;
+  direction: ltr;
+}
+
+.hero-lang-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 9px 12px;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #29344A;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.hero-lang-option:hover { background: #EEF4FD; }
+.hero-lang-option.active-lang { color: var(--blue); background: #E4EEFC; }
+
+/* Mobile-only hamburger, overlaying the image top-right (hidden on desktop) */
+.hero-menu { display: none; }
+
+.hero-menu-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, .92);
+  color: #0b1c3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(10, 20, 50, .25);
+}
+
+.hero-menu-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 190px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 16px 36px rgba(10, 20, 50, .3);
+  padding: 8px;
+  z-index: 20;
+  direction: ltr;
+}
+
+.hero-menu-link {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 9px;
+  color: #1B2437;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero-menu-link:hover { background: #EEF4FD; }
+
+.hero-menu-lang-label {
+  margin: 6px 4px 2px;
+  padding-top: 6px;
+  border-top: 1px solid #EEF1F6;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #9AA6B8;
+}
+
+.hero-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 clamp(20px, 2.6vw, 48px) clamp(20px, 2.6vh, 48px) clamp(24px, 3.6vw, 64px);
+  max-width: 92%;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.hero-eyebrow {
+  margin: 0 0 .4em;
+  font-size: clamp(11px, 0.9vw, 13px);
+  font-weight: 700;
+  letter-spacing: .3em;
+  color: #7A879A;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  margin: 0 0 .12em;
+  font-size: clamp(38px, 5.6vw, 84px);
+  font-weight: 900;
+  letter-spacing: -.02em;
+  line-height: 1;
+  background: linear-gradient(90deg, var(--blue) 0%, #16296e 55%, #2a1f6e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-tagline {
+  margin: 0 0 .9em;
+  font-size: clamp(13px, 1.3vw, 19px);
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.hero-desc {
+  margin: 0 0 1.6em;
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.65;
+  color: #55617A;
+  max-width: 34em;
+}
+
+.get-started-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .6em;
+  padding: .85em 1.7em;
+  border: none;
+  border-radius: 999px;
+  color: #ffffff;
+  background: linear-gradient(90deg, var(--blue), var(--blue-dark));
+  font-size: clamp(13px, 1.05vw, 15.5px);
+  font-weight: 800;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: box-shadow 0.25s ease, transform 0.15s ease;
+  box-shadow: 0 10px 26px rgba(24, 87, 196, 0.35);
+  flex: none;
+}
+
+.get-started-btn svg { width: 1em; height: 1em; }
+
+.get-started-btn:hover {
+  box-shadow: 0 14px 32px rgba(24, 87, 196, 0.45);
+  transform: translateY(-2px);
+}
+
+.get-started-btn:focus-visible {
+  outline: 2px solid var(--blue-dark);
+  outline-offset: 3px;
+}
+
+/* ---------- Featured-tools drifting rail (icons moving right to left) ---------- */
+.featured-tools {
+  width: 100%;
+  max-width: 36em;
+  margin: 2em 0 0;
+  overflow: hidden;
+  position: relative;
+  padding: .5em 0;
+  direction: ltr;
+  mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+
+.featured-tools-track {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: .9em;
+  width: max-content;
+  animation: featured-drift 40s linear infinite;
+  transform: translateX(0);
+  will-change: transform;
+}
+
+.featured-tool-card {
+  width: 3.75em;
+  height: 4.25em;
+  flex: 0 0 3.75em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: .4em;
+}
+
+.featured-tool-badge {
+  width: 3em;
+  height: 3em;
+  border-radius: .9em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-family: inherit;
+  box-shadow: 0 8px 18px rgba(20, 30, 60, .16);
+  border: 1px solid #E9EEF7;
+  flex: none;
+  overflow: hidden;
+}
+
+.featured-tool-badge img {
+  width: 1.75em;
+  height: 1.75em;
+  object-fit: contain;
+  display: block;
+}
+
+.featured-tool-card span {
+  max-width: 3.6em;
+  font-size: .6em;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: .01em;
+  color: #4A5772;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes featured-drift {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured-tools-track { animation: none; }
+}
+
+/* Mobile-only static feature row (hidden on desktop) — replaces the
+   animated rail there, since a marquee looked cramped on small screens. */
+.hero-features-static {
+  display: none;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 1.4em 0 0;
+}
+
+.hero-feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-feature-item svg {
+  width: 22px;
+  height: 22px;
+  color: var(--blue);
+  flex: none;
+}
+
+.hero-feature-item span {
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #29344A;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .hero { background-position: 34% top; }
+
+  .hero-brand {
+    top: 16px;
+    left: 16px;
+    font-size: 19px;
+  }
+
+  /* Hamburger appears over the image; the desktop inline nav row is hidden */
+  .hero-menu {
+    display: block;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 4;
+  }
+  .hero-nav { display: none; }
+
+  /* Image becomes a top banner; content stacks below it in solid white */
+  .hero-content {
+    position: static;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    margin-top: 36dvh;
+    height: calc(100dvh - 36dvh);
+    background: #ffffff;
+    overflow-y: auto;
+  }
+
+  .hero-main {
+    justify-content: flex-start;
+    padding: 18px 22px 20px;
+    max-width: none;
+    gap: 0;
+  }
+
+  .hero-eyebrow { font-size: 10.5px; margin-bottom: .3em; }
+  .hero-title { font-size: clamp(28px, 9vw, 40px); }
+  .hero-tagline { font-size: 11.5px; margin-bottom: .6em; }
+  .hero-desc { font-size: 12.5px; line-height: 1.5; margin-bottom: 1.1em; }
+  .get-started-btn { font-size: 12.5px; padding: .8em 1.6em; }
+
+  /* Animated rail off, simple static row on */
+  .featured-tools { display: none; }
+  .hero-features-static { display: flex; }
+}
+
+@media (max-width: 640px) and (max-height: 620px) {
+  /* Extra-short phones: trim the banner a bit more to keep everything
+     comfortably inside one screen without needing the internal scroll. */
+  .hero-content { margin-top: 30dvh; height: calc(100dvh - 30dvh); }
+  .hero-title { font-size: clamp(24px, 8vw, 34px); }
+  .hero-desc { -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+}
