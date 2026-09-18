@@ -14,18 +14,39 @@ body {
 .tool-breadcrumb a {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 9px;
   color: var(--blue);
   font-weight: 700;
   text-decoration: none;
-  padding: 8px 14px 8px 12px;
+  padding: 8px 16px 8px 10px;
   border-radius: 999px;
   background: #fff;
-  border: 1px solid #E4EAF3;
-  transition: background .2s ease, border-color .2s ease;
+  border: 1.5px solid #E4EAF3;
+  transition: background .22s ease, border-color .22s ease, transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease;
 }
-.tool-breadcrumb a:hover { background: #EEF4FD; border-color: #C9D7EF; }
-.tool-breadcrumb a::before { content: "←"; }
+.tool-breadcrumb a:hover {
+  background: #EEF4FD;
+  border-color: var(--blue);
+  transform: translateX(-3px);
+  box-shadow: 0 6px 16px rgba(24,87,196,.16);
+}
+.tool-breadcrumb a::before {
+  content: "";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex: none;
+  color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='19' y1='12' x2='5' y2='12'/%3E%3Cpolyline points='12 19 5 12 12 5'/%3E%3C/svg%3E"), linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-size: 12px 12px, cover;
+  transition: transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.tool-breadcrumb a:hover::before { transform: translateX(-2px); }
 #tool-category-label {
   color: #8A96AC;
   font-weight: 600;
@@ -38,23 +59,6 @@ body {
   margin: 0 auto;
   padding: 28px 24px 70px;
 }
-
-.tool-breadcrumb {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  margin-bottom: 20px;
-  color: #71809a;
-  font-size: 13px;
-}
-.tool-breadcrumb a {
-  color: var(--blue);
-  text-decoration: none;
-  font-weight: 700;
-}
-.tool-breadcrumb a:hover { text-decoration: underline; }
-#tool-category-label { font-weight: 700; }
 
 .tool-hero {
   position: relative;

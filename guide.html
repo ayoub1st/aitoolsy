@@ -130,8 +130,8 @@
       <div id="domains-page">
         <div class="categories-heading">
           <div>
-            <h2><span class="domain-page-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg></span>Explore by Field</h2>
-            <p>Pick a field to see the tool categories inside it.</p>
+            <h2><span class="domain-page-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg></span><span data-i18n="guide.explorebyfield">Explore by Field</span></h2>
+            <p data-i18n="guide.explorebyfield.sub">Pick a field to see the tool categories inside it.</p>
           </div>
           <span class="categories-total" id="domains-total"></span>
         </div>
@@ -141,7 +141,7 @@
       <!-- Level 2: categories inside one field -->
       <div id="domain-page" hidden>
         <button class="back-btn" id="domain-back-btn" type="button">
-          <span aria-hidden="true">←</span> All fields
+          <span class="back-btn-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></span> <span data-i18n="guide.allfields">All fields</span>
         </button>
 
         <div class="categories-heading">
@@ -153,28 +153,28 @@
             <div class="sort-control" id="sort-control">
               <button class="sort-btn" id="sort-btn" type="button">
                 <span class="sort-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="14" y2="6"></line><line x1="4" y1="12" x2="11" y2="12"></line><line x1="4" y1="18" x2="8" y2="18"></line><polyline points="17 4 17 20"></polyline><polyline points="13 16 17 20 21 16"></polyline></svg></span>
-                <span id="sort-label">Sort</span>
+                <span id="sort-label" data-i18n="guide.sort">Sort</span>
                 <span class="sort-chevron" aria-hidden="true"></span>
               </button>
               <div class="sort-dropdown" id="sort-dropdown">
                 <button class="sort-option active" data-sort="default">
                   <span class="sort-option-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg></span>
-                  <span>Default order</span>
+                  <span data-i18n="guide.sort.default">Default order</span>
                   <span class="sort-option-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
                 </button>
                 <button class="sort-option" data-sort="alpha">
                   <span class="sort-option-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15l3-8 3 8"></path><path d="M4.8 13h4.4"></path><path d="M14 7h6l-6 10h6"></path></svg></span>
-                  <span>Alphabetical (A–Z)</span>
+                  <span data-i18n="guide.sort.alpha">Alphabetical (A–Z)</span>
                   <span class="sort-option-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
                 </button>
                 <button class="sort-option" data-sort="used">
                   <span class="sort-option-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 5 14h6l-1 8 9-13h-6z"></path></svg></span>
-                  <span>Most used</span>
+                  <span data-i18n="guide.sort.used">Most used</span>
                   <span class="sort-option-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
                 </button>
                 <button class="sort-option" data-sort="rated">
                   <span class="sort-option-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><polygon points="12 2.5 15.1 8.8 22 9.8 17 14.7 18.2 21.6 12 18.3 5.8 21.6 7 14.7 2 9.8 8.9 8.8"></polygon></svg></span>
-                  <span>Top rated fields</span>
+                  <span data-i18n="guide.sort.rated">Top rated fields</span>
                   <span class="sort-option-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
                 </button>
               </div>
@@ -187,7 +187,7 @@
       <!-- Level 3: a single category's tools -->
       <div id="category-page" hidden>
         <button class="back-btn" id="category-back-btn" type="button">
-          <span aria-hidden="true">←</span> <span id="category-back-label">Back to categories</span>
+          <span class="back-btn-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg></span> <span id="category-back-label" data-i18n="guide.backtocategories">Back to categories</span>
         </button>
 
         <div class="category-hero" id="category-hero">

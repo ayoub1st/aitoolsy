@@ -183,15 +183,39 @@ html.page-ready body {
 
 .hero-menu-link:hover { background: #EEF4FD; }
 
-.hero-menu-lang-label {
-  margin: 6px 4px 2px;
-  padding-top: 6px;
+.hero-menu-lang-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 6px 0 0;
+  padding: 10px 12px;
+  border: none;
   border-top: 1px solid #EEF1F6;
-  font-size: 10.5px;
+  border-radius: 9px;
+  background: none;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: .06em;
+  letter-spacing: .04em;
   text-transform: uppercase;
-  color: #9AA6B8;
+  color: #6B7690;
+  cursor: pointer;
+  font-family: inherit;
+}
+.hero-menu-lang-toggle:hover, .hero-menu-lang-toggle.open { background: #EEF4FD; color: var(--blue); }
+.hero-menu-lang-toggle .hero-lang-caret {
+  transition: transform .2s ease;
+  font-size: 12px;
+}
+.hero-menu-lang-toggle.open .hero-lang-caret { transform: rotate(180deg); }
+
+.hero-menu-lang-options {
+  padding: 2px 0 0 0;
+  animation: heroMenuLangIn .18s ease;
+}
+@keyframes heroMenuLangIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .hero-main {
@@ -390,7 +414,20 @@ html.page-ready body {
 }
 
 @media (max-width: 640px) {
-  .hero { background-position: 34% top; }
+  /* The banner becomes its own properly-fitted block instead of a crop of
+     the full-height desktop background — that's what was cutting the
+     robot out of frame. */
+  .hero { background-image: none; }
+  .hero::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 36dvh;
+    background-image: url("media/hero-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 2% center;
+  }
 
   .hero-brand {
     top: 16px;
@@ -415,7 +452,7 @@ html.page-ready body {
     right: auto;
     top: auto;
     bottom: auto;
-    margin-top: 36dvh;
+    margin-top: 0;
     height: calc(100dvh - 36dvh);
     background: #ffffff;
     overflow-y: auto;
@@ -423,7 +460,7 @@ html.page-ready body {
 
   .hero-main {
     justify-content: flex-start;
-    padding: 18px 22px 20px;
+    padding: 14px 22px 20px;
     max-width: none;
     gap: 0;
   }
@@ -432,7 +469,7 @@ html.page-ready body {
   .hero-title { font-size: clamp(28px, 9vw, 40px); }
   .hero-tagline { font-size: 11.5px; margin-bottom: .6em; }
   .hero-desc { font-size: 12.5px; line-height: 1.5; margin-bottom: 1.1em; }
-  .get-started-btn { font-size: 12.5px; padding: .8em 1.6em; }
+  .get-started-btn { font-size: 14.5px; padding: 1.05em 2.1em; margin-top: 20px; }
 
   /* Animated rail off, simple static row on */
   .featured-tools { display: none; }
@@ -442,7 +479,8 @@ html.page-ready body {
 @media (max-width: 640px) and (max-height: 620px) {
   /* Extra-short phones: trim the banner a bit more to keep everything
      comfortably inside one screen without needing the internal scroll. */
-  .hero-content { margin-top: 30dvh; height: calc(100dvh - 30dvh); }
+  .hero::before { height: 30dvh; }
+  .hero-content { height: calc(100dvh - 30dvh); }
   .hero-title { font-size: clamp(24px, 8vw, 34px); }
   .hero-desc { -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
 }

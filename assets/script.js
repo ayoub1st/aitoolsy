@@ -733,6 +733,12 @@
   // count per category) as a reasonable, disclosed stand-in rather than
   // fabricated numbers. "Top rated fields" is genuine — it's the real average
   // rating of each category's tools.
+  function sortLabelFor(mode) {
+    var lang = (document.documentElement.getAttribute("lang")) || "en";
+    var dict = (window.AiToolsyI18n && window.AiToolsyI18n.translations[lang]) || {};
+    var keys = { default: "guide.sort", alpha: "guide.sort.alpha", used: "guide.sort.used", rated: "guide.sort.rated" };
+    return dict[keys[mode]] || SORT_LABELS[mode] || "Sort";
+  }
   var SORT_LABELS = {
     default: "Sort",
     alpha: "Alphabetical (A–Z)",
@@ -773,7 +779,7 @@
       grid.appendChild(entry.box);
     });
 
-    if (sortLabel) sortLabel.textContent = SORT_LABELS[mode] || "Sort";
+    if (sortLabel) sortLabel.textContent = sortLabelFor(mode);
     document.querySelectorAll(".sort-option").forEach(function (opt) {
       opt.classList.toggle("active", opt.getAttribute("data-sort") === (mode || "default"));
     });

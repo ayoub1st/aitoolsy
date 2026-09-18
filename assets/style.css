@@ -344,9 +344,9 @@ main {
 .back-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin: 4px 0 16px;
-  padding: 9px 16px 9px 14px;
+  padding: 8px 18px 8px 8px;
   border: 1.5px solid var(--blue);
   border-radius: 999px;
   background: var(--white);
@@ -355,10 +355,28 @@ main {
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  transition: background .18s ease, transform .18s ease;
+  transition: background .2s ease, transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease, border-color .2s ease;
 }
-.back-btn:hover { background: #EEF4FD; transform: translateX(-2px); }
-.back-btn span { font-size: 16px; line-height: 1; }
+.back-btn:hover {
+  background: #EEF4FD;
+  border-color: var(--blue-dark);
+  transform: translateX(-3px);
+  box-shadow: 0 6px 16px rgba(24,87,196,.16);
+}
+.back-btn-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex: none;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+  color: #fff;
+  transition: transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.back-btn-arrow svg { width: 13px; height: 13px; }
+.back-btn:hover .back-btn-arrow { transform: translateX(-2px); }
 
 .domain-grid {
   display: grid;
@@ -517,6 +535,18 @@ main {
   .domain-card { padding: 16px 14px 16px; }
   .domain-title { font-size: 12.5px; }
   .domain-desc { font-size: 10.5px; }
+}
+
+@media (max-width: 520px) {
+  /* Anchor the dropdown to the button's LEFT edge instead of its right
+     edge — the sort button sits near the left side of the screen on
+     mobile, so a right-anchored dropdown ran off the left edge. */
+  .sort-dropdown {
+    left: 0;
+    right: auto;
+    transform-origin: top left;
+    min-width: min(260px, calc(100vw - 32px));
+  }
 }
 
 .grid {

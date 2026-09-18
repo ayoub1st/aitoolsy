@@ -25,7 +25,17 @@
       "landing.welcome.eyebrow": "Welcome to",
       "landing.tagline": "One platform. Endless tools.",
       "landing.welcome.subtitle": "Discover, compare, and choose from 200+ the best AI tools across all categories. Your space. Your toolkit. Your productivity.",
-      "landing.getstarted": "Get Started"
+      "landing.getstarted": "Get Started",
+      "guide.explorebyfield": "Explore by Field",
+      "guide.explorebyfield.sub": "Pick a field to see the tool categories inside it.",
+      "guide.allfields": "All fields",
+      "guide.sort": "Sort",
+      "guide.sort.default": "Default order",
+      "guide.sort.alpha": "Alphabetical (A–Z)",
+      "guide.sort.used": "Most used",
+      "guide.sort.rated": "Top rated fields",
+      "guide.backtocategories": "Back to categories",
+      "guide.backtotools": "Back to all tools"
     },
     fr: {
       "chrome.title": "Votre guide d'outils",
@@ -42,7 +52,17 @@
       "landing.welcome.eyebrow": "Bienvenue chez",
       "landing.tagline": "Une plateforme. Des outils sans fin.",
       "landing.welcome.subtitle": "Découvrez, comparez et choisissez parmi plus de 200 des meilleurs outils IA, toutes catégories confondues. Votre espace. Votre boîte à outils. Votre productivité.",
-      "landing.getstarted": "Commencer"
+      "landing.getstarted": "Commencer",
+      "guide.explorebyfield": "Explorer par domaine",
+      "guide.explorebyfield.sub": "Choisissez un domaine pour voir les catégories d'outils qu'il contient.",
+      "guide.allfields": "Tous les domaines",
+      "guide.sort": "Trier",
+      "guide.sort.default": "Ordre par défaut",
+      "guide.sort.alpha": "Alphabétique (A–Z)",
+      "guide.sort.used": "Les plus utilisés",
+      "guide.sort.rated": "Domaines les mieux notés",
+      "guide.backtocategories": "Retour aux catégories",
+      "guide.backtotools": "Retour à tous les outils"
     },
     ar: {
       "chrome.title": "دليلك الشامل للأدوات",
@@ -59,7 +79,17 @@
       "landing.welcome.eyebrow": "مرحبًا بك في",
       "landing.tagline": "منصة واحدة. أدوات لا تُحصى.",
       "landing.welcome.subtitle": "اكتشف وقارن واختر من بين أكثر من 200 أداة ذكاء اصطناعي في جميع التصنيفات. مساحتك. أدواتك. إنتاجيتك.",
-      "landing.getstarted": "ابدأ الآن"
+      "landing.getstarted": "ابدأ الآن",
+      "guide.explorebyfield": "استكشف حسب المجال",
+      "guide.explorebyfield.sub": "اختر مجالًا لعرض تصنيفات الأدوات بداخله.",
+      "guide.allfields": "كل المجالات",
+      "guide.sort": "ترتيب",
+      "guide.sort.default": "الترتيب الافتراضي",
+      "guide.sort.alpha": "أبجديًا (أ–ي)",
+      "guide.sort.used": "الأكثر استخدامًا",
+      "guide.sort.rated": "المجالات الأعلى تقييمًا",
+      "guide.backtocategories": "العودة إلى التصنيفات",
+      "guide.backtotools": "العودة إلى كل الأدوات"
     },
     de: {
       "chrome.title": "Ihr Werkzeug-Leitfaden",
@@ -76,7 +106,17 @@
       "landing.welcome.eyebrow": "Willkommen bei",
       "landing.tagline": "Eine Plattform. Endlose Werkzeuge.",
       "landing.welcome.subtitle": "Entdecken, vergleichen und wählen Sie aus über 200 der besten KI-Tools in allen Kategorien. Ihr Bereich. Ihr Werkzeugkasten. Ihre Produktivität.",
-      "landing.getstarted": "Loslegen"
+      "landing.getstarted": "Loslegen",
+      "guide.explorebyfield": "Nach Bereich erkunden",
+      "guide.explorebyfield.sub": "Wählen Sie einen Bereich, um die darin enthaltenen Tool-Kategorien zu sehen.",
+      "guide.allfields": "Alle Bereiche",
+      "guide.sort": "Sortieren",
+      "guide.sort.default": "Standardreihenfolge",
+      "guide.sort.alpha": "Alphabetisch (A–Z)",
+      "guide.sort.used": "Meistgenutzt",
+      "guide.sort.rated": "Bestbewertete Bereiche",
+      "guide.backtocategories": "Zurück zu den Kategorien",
+      "guide.backtotools": "Zurück zu allen Tools"
     },
     es: {
       "chrome.title": "Tu guía de herramientas",
@@ -93,7 +133,17 @@
       "landing.welcome.eyebrow": "Bienvenido a",
       "landing.tagline": "Una plataforma. Herramientas sin fin.",
       "landing.welcome.subtitle": "Descubre, compara y elige entre más de 200 de las mejores herramientas de IA en todas las categorías. Tu espacio. Tu caja de herramientas. Tu productividad.",
-      "landing.getstarted": "Comenzar"
+      "landing.getstarted": "Comenzar",
+      "guide.explorebyfield": "Explorar por campo",
+      "guide.explorebyfield.sub": "Elige un campo para ver las categorías de herramientas que contiene.",
+      "guide.allfields": "Todos los campos",
+      "guide.sort": "Ordenar",
+      "guide.sort.default": "Orden predeterminado",
+      "guide.sort.alpha": "Alfabético (A–Z)",
+      "guide.sort.used": "Más usados",
+      "guide.sort.rated": "Campos mejor valorados",
+      "guide.backtocategories": "Volver a las categorías",
+      "guide.backtotools": "Volver a todas las herramientas"
     }
   };
 

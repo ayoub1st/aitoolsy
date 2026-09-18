@@ -612,6 +612,7 @@
         var back = document.createElement("span");
         back.className = "memory-card-back";
         back.innerHTML =
+          '<span class="memory-card-watermark" aria-hidden="true"></span>' +
           '<span class="memory-card-circuit" aria-hidden="true">' +
           '<span class="circuit-line line-a"></span>' +
           '<span class="circuit-line line-b"></span>' +

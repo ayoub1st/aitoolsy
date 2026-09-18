@@ -113,19 +113,39 @@
   var heroMenuBtn = document.getElementById("hero-menu-btn");
   var heroMenuPanel = document.getElementById("hero-menu-panel");
 
+  var heroMenuLangToggle = document.getElementById("hero-menu-lang-toggle");
+  var heroMenuLangOptions = document.getElementById("hero-menu-lang-options");
+
   if (heroMenuBtn && heroMenuPanel) {
+    function closeHeroMenuPanel() {
+      heroMenuPanel.hidden = true;
+      if (heroMenuLangOptions) heroMenuLangOptions.hidden = true;
+      if (heroMenuLangToggle) heroMenuLangToggle.classList.remove("open");
+    }
     heroMenuBtn.addEventListener("click", function (e) {
       e.stopPropagation();
-      heroMenuPanel.hidden = !heroMenuPanel.hidden;
+      if (heroMenuPanel.hidden) { heroMenuPanel.hidden = false; }
+      else { closeHeroMenuPanel(); }
     });
     document.addEventListener("click", function (e) {
       if (!heroMenuPanel.hidden && !heroMenuPanel.contains(e.target) && e.target !== heroMenuBtn) {
-        heroMenuPanel.hidden = true;
+        closeHeroMenuPanel();
       }
     });
     // Picking a language inside the mobile panel shouldn't leave the panel open.
     heroMenuPanel.querySelectorAll(".hero-lang-option").forEach(function (btn) {
-      btn.addEventListener("click", function () { heroMenuPanel.hidden = true; });
+      btn.addEventListener("click", function () { closeHeroMenuPanel(); });
+    });
+  }
+
+  // The mobile panel's language row starts collapsed to a single
+  // "Languages ▾" line — tapping it reveals the language buttons, same
+  // pattern as the desktop dropdown.
+  if (heroMenuLangToggle && heroMenuLangOptions) {
+    heroMenuLangToggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      heroMenuLangOptions.hidden = !heroMenuLangOptions.hidden;
+      heroMenuLangToggle.classList.toggle("open", !heroMenuLangOptions.hidden);
     });
   }
 
