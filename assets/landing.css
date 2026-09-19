@@ -143,6 +143,7 @@ html.page-ready body {
 
 /* Mobile-only hamburger, overlaying the image top-right (hidden on desktop) */
 .hero-menu { display: none; }
+.hero-extra-badge, .hero-corner-doodle { display: none; }
 
 .hero-menu-btn {
   width: 40px;
@@ -156,6 +157,39 @@ html.page-ready body {
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 6px 16px rgba(10, 20, 50, .25);
+  position: relative;
+  z-index: 1;
+}
+
+/* Draws attention to the menu on first load: a soft pulsing glow ring plus
+   a thin light beam sweeping around the button. Mobile-only (see .hero-menu
+   display rule) — desktop's inline nav needs no such affordance. */
+.hero-menu-btn::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79, 166, 255, .55) 0%, rgba(79, 166, 255, 0) 70%);
+  animation: heroMenuGlow 2.4s ease-in-out infinite;
+  z-index: -1;
+}
+.hero-menu-btn::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  border-top-color: #4fa6ff;
+  border-right-color: rgba(79, 166, 255, .5);
+  animation: heroMenuSpin 2.6s linear infinite;
+  z-index: -1;
+}
+@keyframes heroMenuGlow {
+  0%, 100% { opacity: .55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.18); }
+}
+@keyframes heroMenuSpin {
+  to { transform: rotate(360deg); }
 }
 
 .hero-menu-panel {
@@ -414,21 +448,24 @@ html.page-ready body {
 }
 
 @media (max-width: 640px) {
-  /* The banner becomes its own properly-fitted block instead of a crop of
-     the full-height desktop background — that's what was cutting the
-     robot out of frame. */
+  /* The banner is now the exact reference artwork (cropped to the wave's
+     natural edge), sized by its own aspect ratio (926:964) so nothing
+     inside it is ever cropped. */
   .hero { background-image: none; }
   .hero::before {
     content: "";
     display: block;
     width: 100%;
-    height: 36dvh;
-    background-image: url("media/hero-bg.jpg");
+    height: 104.1vw;
+    background-image: url("media/hero-bg-mobile.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: 2% center;
+    background-position: center top;
   }
 
+  /* The real, functional brand mark + hamburger sit over the plain blue
+     strip at the very top of the image (the reference art's own baked-in
+     logo/menu icon were cropped out precisely so these don't double up). */
   .hero-brand {
     top: 16px;
     left: 16px;
@@ -453,7 +490,7 @@ html.page-ready body {
     top: auto;
     bottom: auto;
     margin-top: 0;
-    height: calc(100dvh - 36dvh);
+    height: calc(100dvh - 104.1vw);
     background: #ffffff;
     overflow-y: auto;
   }
@@ -469,7 +506,26 @@ html.page-ready body {
   .hero-title { font-size: clamp(28px, 9vw, 40px); }
   .hero-tagline { font-size: 11.5px; margin-bottom: .6em; }
   .hero-desc { font-size: 12.5px; line-height: 1.5; margin-bottom: 1.1em; }
-  .get-started-btn { font-size: 14.5px; padding: 1.05em 2.1em; margin-top: 20px; }
+  .get-started-btn {
+    font-size: 16px;
+    padding: 1.15em 2.3em;
+    margin-top: 22px;
+    box-shadow: 0 12px 26px rgba(24, 87, 196, .38);
+  }
+
+  /* Faint decorative icon/sparkle cluster (cropped from the same
+     reference art) in the bottom-left corner of the white area. */
+  .hero-corner-doodle {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 150px;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+    opacity: .8;
+  }
 
   /* Animated rail off, simple static row on */
   .featured-tools { display: none; }
@@ -479,8 +535,8 @@ html.page-ready body {
 @media (max-width: 640px) and (max-height: 620px) {
   /* Extra-short phones: trim the banner a bit more to keep everything
      comfortably inside one screen without needing the internal scroll. */
-  .hero::before { height: 30dvh; }
-  .hero-content { height: calc(100dvh - 30dvh); }
+  .hero::before { height: 88vw; }
+  .hero-content { height: calc(100dvh - 88vw); }
   .hero-title { font-size: clamp(24px, 8vw, 34px); }
   .hero-desc { -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
 }

@@ -319,6 +319,11 @@
       '<button type="button" class="game-btn" id="ttt-friend">Play a friend</button>' +
       '<button type="button" class="game-btn primary" id="ttt-cpu">Play the computer</button>' +
       '</div>' +
+      '<div class="ttt-players" id="ttt-players" hidden>' +
+      '<div class="ttt-player" id="ttt-player-x"><span class="ttt-avatar x-avatar">✕</span><span class="ttt-player-name" id="ttt-name-x">You</span></div>' +
+      '<span class="ttt-turn-indicator" id="ttt-turn-indicator" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>' +
+      '<div class="ttt-player" id="ttt-player-o"><span class="ttt-avatar o-avatar">○</span><span class="ttt-player-name" id="ttt-name-o">Computer</span></div>' +
+      '</div>' +
       '<p class="game-status" id="ttt-status"></p>' +
       '<div class="ttt-board" id="ttt-board" hidden></div>' +
       '</div>';
@@ -326,6 +331,12 @@
     var modeRow = document.getElementById("ttt-mode-row");
     var status = document.getElementById("ttt-status");
     var board = document.getElementById("ttt-board");
+    var playersRow = document.getElementById("ttt-players");
+    var nameX = document.getElementById("ttt-name-x");
+    var nameO = document.getElementById("ttt-name-o");
+    var playerXChip = document.getElementById("ttt-player-x");
+    var playerOChip = document.getElementById("ttt-player-o");
+    var turnIndicator = document.getElementById("ttt-turn-indicator");
     var cells = [], state, vsComputer, over, currentPlayer, timers = [];
 
     var LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
@@ -377,7 +388,11 @@
       currentPlayer = "X";
       modeRow.hidden = true;
       board.hidden = false;
-      status.textContent = vsComputer ? "Your turn (X)" : "Player 1's turn (X)";
+      playersRow.hidden = false;
+      nameX.textContent = "You";
+      nameO.textContent = vsComputer ? "Computer" : "Player 2";
+      status.textContent = "";
+      updateTurnUI();
       board.innerHTML = "";
       cells = [];
       for (var i = 0; i < 9; i++) {
@@ -392,11 +407,54 @@
       }
     }
 
+    function updateTurnUI() {
+      playerXChip.classList.toggle("active", !over && currentPlayer === "X");
+      playerOChip.classList.toggle("active", !over && currentPlayer === "O");
+      turnIndicator.classList.toggle("flip", currentPlayer === "O");
+    }
+
     function render() {
       for (var i = 0; i < 9; i++) {
-        cells[i].textContent = state[i] || "";
-        cells[i].className = "ttt-cell" + (state[i] ? " filled " + state[i].toLowerCase() : "");
+        var v = state[i];
+        cells[i].className = "ttt-cell" + (v ? " filled " + v.toLowerCase() : "");
+        cells[i].innerHTML = v
+          ? (v === "X"
+            ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg>'
+            : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2"><circle cx="12" cy="12" r="7.2"></circle></svg>')
+          : "";
       }
+      updateTurnUI();
+    }
+
+    function winningLine(b) {
+      for (var i = 0; i < LINES.length; i++) {
+        var L = LINES[i];
+        if (b[L[0]] && b[L[0]] === b[L[1]] && b[L[1]] === b[L[2]]) return L;
+      }
+      return null;
+    }
+
+    function drawWinLine(line) {
+      var old = board.querySelector(".ttt-winline");
+      if (old) old.remove();
+      var boardRect = board.getBoundingClientRect();
+      var r1 = cells[line[0]].getBoundingClientRect();
+      var r2 = cells[line[2]].getBoundingClientRect();
+      var x1 = r1.left + r1.width / 2 - boardRect.left;
+      var y1 = r1.top + r1.height / 2 - boardRect.top;
+      var x2 = r2.left + r2.width / 2 - boardRect.left;
+      var y2 = r2.top + r2.height / 2 - boardRect.top;
+      var midX = (x1 + x2) / 2, midY = (y1 + y2) / 2;
+      var dx = x2 - x1, dy = y2 - y1;
+      var length = Math.sqrt(dx * dx + dy * dy) + 26;
+      var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+      var lineEl = document.createElement("div");
+      lineEl.className = "ttt-winline";
+      lineEl.style.width = length + "px";
+      lineEl.style.left = (midX - length / 2) + "px";
+      lineEl.style.top = (midY - 3) + "px";
+      lineEl.style.transform = "rotate(" + angle + "deg)";
+      board.appendChild(lineEl);
     }
 
     function endCheck() {
@@ -406,9 +464,14 @@
         status.textContent = vsComputer
           ? (winner === "X" ? "You win! 🎉" : "The computer wins this one.")
           : "Player " + (winner === "X" ? "1" : "2") + " (" + winner + ") wins!";
+        playerXChip.classList.toggle("winner", winner === "X");
+        playerOChip.classList.toggle("winner", winner === "O");
+        updateTurnUI();
+        var line = winningLine(state);
+        if (line) drawWinLine(line);
         return true;
       }
-      if (isFull(state)) { over = true; status.textContent = "It's a draw."; return true; }
+      if (isFull(state)) { over = true; status.textContent = "It's a draw."; updateTurnUI(); return true; }
       return false;
     }
 
@@ -420,14 +483,16 @@
       if (vsComputer) {
         currentPlayer = "O";
         status.textContent = "Computer is thinking…";
+        updateTurnUI();
         timers.push(window.setTimeout(function () {
           state[computerMove()] = "O";
           render();
-          if (!endCheck()) { currentPlayer = "X"; status.textContent = "Your turn (X)"; }
+          if (!endCheck()) { currentPlayer = "X"; status.textContent = "Your turn (X)"; updateTurnUI(); }
         }, 380));
       } else {
         currentPlayer = currentPlayer === "X" ? "O" : "X";
         status.textContent = "Player " + (currentPlayer === "X" ? "1" : "2") + "'s turn (" + currentPlayer + ")";
+        updateTurnUI();
       }
     }
 
@@ -613,17 +678,7 @@
         back.className = "memory-card-back";
         back.innerHTML =
           '<span class="memory-card-watermark" aria-hidden="true"></span>' +
-          '<span class="memory-card-circuit" aria-hidden="true">' +
-          '<span class="circuit-line line-a"></span>' +
-          '<span class="circuit-line line-b"></span>' +
-          '<span class="circuit-dot dot-a"></span>' +
-          '<span class="circuit-dot dot-b"></span>' +
-          '<span class="circuit-dot dot-c"></span>' +
-          "</span>" +
-          '<svg class="memory-card-back-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-          '<rect x="8" y="8" width="8" height="8" rx="1.4" fill="currentColor"/>' +
-          '<path d="M8 4.5v2.2M12 4.5v2.2M16 4.5v2.2M8 17.3v2.2M12 17.3v2.2M16 17.3v2.2M4.5 8h2.2M4.5 12h2.2M4.5 16h2.2M17.3 8h2.2M17.3 12h2.2M17.3 16h2.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
-          "</svg>";
+          '<span class="memory-card-frame" aria-hidden="true"><span class="memory-card-back-icon">?</span></span>';
         var front = document.createElement("span");
         front.className = "memory-card-front";
         var img = document.createElement("img");
@@ -945,6 +1000,7 @@
         var r = +el.dataset.r, c = +el.dataset.c;
         var owner = boxOwner[r][c];
         el.className = "dots-box" + (owner ? " owned " + (owner === "X" ? "mine" : "theirs") : "");
+        el.textContent = owner ? (owner === "X" ? "✕" : "○") : "";
       });
     }
 
@@ -974,9 +1030,12 @@
     }
 
     function humanDraw(type, r, c) {
-      if (over || turn !== "X" || isLineDrawn(type, r, c)) return;
-      var completed = drawLine(type, r, c, "X");
-      afterMove(completed, "X");
+      // In computer mode only X (the human) may click; in friend mode both
+      // X and O are human, so whichever one's turn it is may click.
+      if (over || isLineDrawn(type, r, c) || (vsComputer && turn !== "X")) return;
+      var player = turn;
+      var completed = drawLine(type, r, c, player);
+      afterMove(completed, player);
     }
 
     // Solid heuristic AI: always completes a free box (and chains through

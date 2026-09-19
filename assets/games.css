@@ -1,7 +1,13 @@
+/* Belt-and-braces: an element's `hidden` attribute must always win over any
+   class-based `display` rule below, regardless of selector specificity —
+   without this, toggling `.hidden = true/false` from JS silently fails to
+   hide anything that has its own `display: flex/grid` class. */
+[hidden] { display: none !important; }
+
 .games-content-wrap { max-width: 1080px; }
 
 /* ---------- Picker hero ---------- */
-.games-hero { margin-bottom: 8px; }
+.games-hero { margin-bottom: 8px; position: relative; }
 .games-eyebrow {
   margin: 0 0 4px;
   color: var(--blue);
@@ -9,6 +15,12 @@
   font-weight: 800;
   letter-spacing: .12em;
   text-transform: uppercase;
+}
+.games-title {
+  background: linear-gradient(120deg, #16213A 0%, var(--blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ---------- Picker ---------- */
@@ -33,7 +45,14 @@
   cursor: pointer;
   font-family: inherit;
   overflow: hidden;
+  opacity: 0;
+  animation: gamePickIn .5s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
   transition: border-color .25s ease, box-shadow .25s ease, transform .25s cubic-bezier(.22,1,.36,1);
+}
+@keyframes gamePickIn {
+  from { opacity: 0; transform: translateY(16px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .game-pick-card::before {
   content: "";
@@ -56,6 +75,8 @@
 .game-pick-card[data-tint="blue"] { --tint-a: #1857C4; --tint-b: #4C6FE0; }
 .game-pick-card[data-tint="purple"] { --tint-a: #7C3AED; --tint-b: #9333EA; }
 .game-pick-card[data-tint="green"] { --tint-a: #16A34A; --tint-b: #22C55E; }
+.game-pick-card[data-tint="amber"] { --tint-a: #D97706; --tint-b: #F59E0B; }
+.game-pick-card[data-tint="pink"] { --tint-a: #DB2777; --tint-b: #EC4899; }
 
 .game-pick-card:hover {
   border-color: var(--tint-a);
@@ -63,6 +84,34 @@
   transform: translateY(-6px);
 }
 .game-pick-card:hover::after { opacity: .22; transform: scale(1.15); }
+
+/* Featured card: spans the first two desktop columns (and both mobile
+   columns) so it reads as the highlighted entry point, not just item 1. */
+.game-pick-card.featured {
+  grid-column: span 2;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  background: linear-gradient(120deg, #F5F8FF 0%, #ffffff 55%);
+}
+.game-pick-card.featured .game-pick-icon { margin-bottom: 0; flex: none; width: 64px; height: 64px; }
+.game-pick-card.featured .game-pick-icon svg { width: 30px; height: 30px; }
+.game-pick-card.featured .game-pick-copy { display: flex; flex-direction: column; min-width: 0; }
+.game-pick-card.featured .game-pick-desc { margin-bottom: 10px; }
+.game-pick-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--tint-a), var(--tint-b));
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px rgba(24,87,196,.28);
+}
 
 .game-pick-icon {
   display: flex; align-items: center; justify-content: center;
@@ -73,7 +122,19 @@
   position: relative; z-index: 1;
   transition: transform .3s cubic-bezier(.34,1.56,.64,1);
 }
+.game-pick-icon::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--tint-a), var(--tint-b));
+  opacity: .35;
+  filter: blur(10px);
+  z-index: -1;
+  transition: opacity .3s ease;
+}
 .game-pick-card:hover .game-pick-icon { transform: scale(1.08) rotate(-5deg); }
+.game-pick-card:hover .game-pick-icon::before { opacity: .55; }
 .game-pick-icon svg { width: 25px; height: 25px; }
 .game-pick-name { position: relative; z-index: 1; font-size: 17px; font-weight: 800; color: #16213A; margin-bottom: 6px; }
 .game-pick-desc { position: relative; z-index: 1; font-size: 12.5px; color: #6B7688; line-height: 1.55; margin-bottom: 18px; }
@@ -107,6 +168,7 @@
 .game-btn:disabled { opacity: .5; cursor: not-allowed; }
 
 .game-mode-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.game-mode-row[hidden] { display: none; }
 .game-status { margin: 10px 0; color: #4A5568; font-size: 15px; font-weight: 600; min-height: 1.4em; }
 
 /* ---------- Puzzle ---------- */
@@ -163,30 +225,102 @@
 .puzzle-tile.blank { background: transparent; cursor: default; }
 
 /* ---------- Tic Tac Toe ---------- */
+.ttt-wrap { max-width: 420px; margin: 0 auto; }
+
+.ttt-players {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 4px 0 14px;
+}
+.ttt-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 16px;
+  border: 1.5px solid #E4EAF3;
+  background: #F7FAFF;
+  min-width: 92px;
+  transition: border-color .25s ease, background .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.ttt-player .ttt-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; font-weight: 800;
+  background: #E4EAF3; color: #97A3B8;
+}
+.ttt-player-name { font-size: 11.5px; font-weight: 700; color: #6B7690; }
+.ttt-player.active {
+  border-color: var(--blue);
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(24,87,196,.16);
+}
+.ttt-player.active .ttt-player-name { color: #16213A; }
+#ttt-player-x.active .ttt-avatar { background: #E53E3E; color: #fff; }
+#ttt-player-o.active .ttt-avatar { background: var(--blue); color: #fff; }
+.ttt-player.winner { border-color: #16A34A; background: #F0FBF3; }
+.ttt-player.winner .ttt-avatar { background: #16A34A; color: #fff; }
+
+.ttt-turn-indicator {
+  width: 20px; height: 20px;
+  color: #C4CEDD;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1), color .2s ease;
+  flex: none;
+}
+.ttt-turn-indicator svg { width: 100%; height: 100%; }
+.ttt-turn-indicator.flip { transform: rotate(180deg); color: var(--blue); }
+
 .ttt-board {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   width: 100%;
   max-width: min(380px, 56vh, 56vw);
   margin: 0 auto;
+  padding: 12px;
+  border-radius: 22px;
+  background: linear-gradient(160deg, #EEF3FC 0%, #F8FAFF 100%);
+  box-shadow: inset 0 0 0 1px #E4EAF3;
 }
 .ttt-cell {
   aspect-ratio: 1;
   border-radius: 14px;
   border: 1.5px solid #E4EAF3;
   background: #fff;
-  font-size: 44px;
-  font-weight: 800;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(16,24,40,.05);
-  transition: border-color .2s ease, background .2s ease;
+  transition: border-color .2s ease, background .2s ease, transform .15s ease, box-shadow .2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.ttt-cell:hover:not(.filled) { border-color: #C9D7EF; background: #F7FAFF; }
-.ttt-cell.x { color: var(--blue); }
-.ttt-cell.o { color: #E53E3E; }
+.ttt-cell svg { width: 46%; height: 46%; }
+.ttt-cell:hover:not(.filled) { border-color: #C9D7EF; background: #F7FAFF; transform: translateY(-1px); box-shadow: 0 6px 14px rgba(16,24,40,.08); }
+.ttt-cell.x { color: #E53E3E; }
+.ttt-cell.o { color: var(--blue); }
 .ttt-cell.filled { cursor: default; }
-.ttt-cell.filled { animation: tttPop .22s cubic-bezier(.34,1.56,.64,1); }
+.ttt-cell.filled svg { animation: tttPop .28s cubic-bezier(.34,1.56,.64,1); }
+
+.ttt-winline {
+  position: absolute;
+  height: 6px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #16A34A, #22C55E);
+  box-shadow: 0 3px 10px rgba(22,163,74,.4);
+  transform-origin: center;
+  animation: tttWinLine .3s ease;
+  z-index: 3;
+}
+@keyframes tttWinLine {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
 @keyframes tttPop {
   from { transform: scale(.5); opacity: .3; }
@@ -195,9 +329,11 @@
 
 /* ---------- Memory Match ---------- */
 .memory-setup { display: flex; flex-wrap: wrap; gap: 28px; margin-bottom: 18px; justify-content: center; }
+.memory-setup[hidden] { display: none; }
 .memory-setup-group span { display: block; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: #8A96AC; margin-bottom: 8px; }
 
 .memory-scores { display: flex; gap: 10px; margin-bottom: 14px; justify-content: center; }
+.memory-scores[hidden] { display: none; }
 .memory-scores span {
   padding: 8px 16px; border-radius: 999px; background: #F3F5F9; color: #6B7688;
   font-size: 13.5px; font-weight: 700; transition: background .2s ease, color .2s ease;
@@ -245,27 +381,42 @@
   border: 1.5px solid #E4EAF3;
 }
 .memory-card-back {
-  background: linear-gradient(150deg, #EDF3FE 0%, #F7FAFF 55%, #ffffff 100%);
+  background: linear-gradient(150deg, #2E6FE0 0%, #1857C4 55%, #123F91 100%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .9),
-    inset 0 -6px 12px rgba(24, 87, 196, .10),
-    inset 6px 0 14px -10px rgba(24, 87, 196, .18),
-    0 1px 0 rgba(16, 24, 40, .04);
+    inset 0 1px 0 rgba(255, 255, 255, .25),
+    inset 0 -10px 18px rgba(6, 20, 55, .35),
+    0 6px 14px rgba(16, 24, 40, .16);
   overflow: hidden;
+  border-color: #123F91;
 }
 .memory-card-back-icon {
   position: relative;
-  width: 28%;
-  height: 28%;
-  color: var(--blue);
-  opacity: .9;
-  filter: drop-shadow(0 3px 7px rgba(24,87,196,.3));
-  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  font-size: 34%;
+  font-weight: 900;
+  line-height: 1;
+  font-family: inherit;
+  color: #ffffff;
+  opacity: .95;
+  text-shadow: 0 3px 8px rgba(6, 20, 55, .45);
 }
-.memory-card:hover .memory-card-back-icon { transform: scale(1.14) rotate(-4deg); }
+
+/* An inset white frame around the "?" — makes the back read as a real
+   printed card face rather than a flat color block. */
+.memory-card-frame {
+  position: absolute;
+  inset: 14%;
+  border: 2px solid rgba(255, 255, 255, .55);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1), border-color .3s ease;
+}
+.memory-card:hover .memory-card-frame { border-color: rgba(255, 255, 255, .85); transform: scale(1.08) rotate(-3deg); }
 
 /* A very faint robot head, dissolving toward the card's edge — a nod to
-   the site mascot without competing with the chip icon in front of it. */
+   the site mascot without competing with the "?" mark in front of it. */
 .memory-card-watermark {
   position: absolute;
   right: -8%;
@@ -277,34 +428,12 @@
   background-repeat: no-repeat;
   background-position: bottom right;
   opacity: .16;
-  filter: grayscale(1) brightness(1.6) sepia(1) hue-rotate(175deg) saturate(3);
+  filter: grayscale(1) brightness(6);
   -webkit-mask-image: radial-gradient(circle at 75% 80%, rgba(0,0,0,.9) 0%, rgba(0,0,0,.5) 45%, transparent 78%);
   mask-image: radial-gradient(circle at 75% 80%, rgba(0,0,0,.9) 0%, rgba(0,0,0,.5) 45%, transparent 78%);
   pointer-events: none;
 }
 
-/* Faint circuit-board motif — ties the card back to the site's AI/tech
-   identity instead of decorative shapes. */
-.memory-card-circuit {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.circuit-line {
-  position: absolute;
-  background: rgba(24, 87, 196, .16);
-}
-.line-a { top: 22%; left: 0; width: 26%; height: 2px; }
-.line-b { bottom: 24%; right: 0; width: 22%; height: 2px; }
-.circuit-dot {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(24, 87, 196, .28);
-  border: 1.5px solid rgba(24, 87, 196, .4);
-}
-.dot-a { width: 7px; height: 7px; top: calc(22% - 3.5px); left: 24%; }
-.dot-b { width: 6px; height: 6px; bottom: calc(24% - 3px); right: 20%; }
-.dot-c { width: 5px; height: 5px; top: 14%; right: 16%; background: rgba(124, 58, 237, .22); border-color: rgba(124, 58, 237, .34); }
 .memory-card-front {
   background: #fff;
   transform: rotateY(180deg);
@@ -322,6 +451,11 @@
   .game-pick-desc { font-size: 10.5px; line-height: 1.4; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .game-pick-play { font-size: 11px; gap: 4px; }
   .game-pick-card::after { width: 120px; height: 120px; right: -50px; bottom: -55px; }
+  .game-pick-card.featured { grid-column: span 2; flex-direction: row; }
+  .game-pick-card.featured .game-pick-icon { width: 52px; height: 52px; margin-bottom: 0; }
+  .game-pick-card.featured .game-pick-icon svg { width: 24px; height: 24px; }
+  .game-pick-card.featured .game-pick-desc { -webkit-line-clamp: 2; }
+  .game-pick-badge { top: 12px; right: 12px; font-size: 9px; padding: 3px 8px; }
   .memory-board { grid-template-columns: repeat(4, 1fr); max-width: 100%; }
   .memory-board.size-32 { grid-template-columns: repeat(4, 1fr); max-width: 100%; }
 }
@@ -329,4 +463,6 @@
 @media (max-width: 400px) {
   .game-picker { gap: 10px; }
   .game-pick-card { padding: 14px 12px 12px; }
+  .game-pick-card.featured { flex-direction: column; align-items: flex-start; }
+  .game-pick-card.featured .game-pick-icon { margin-bottom: 10px; }
 }

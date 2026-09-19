@@ -89,7 +89,8 @@
       var host = new URL(link).hostname.replace(/^www\./, "");
       return [
         "https://logo.clearbit.com/" + host + "?size=64",
-        "https://www.google.com/s2/favicons?sz=64&domain=" + host
+        "https://www.google.com/s2/favicons?sz=64&domain=" + host,
+        "https://icons.duckduckgo.com/ip3/" + host + ".ico"
       ];
     } catch (e) {
       return [];

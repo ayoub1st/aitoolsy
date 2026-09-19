@@ -546,7 +546,16 @@ main {
     right: auto;
     transform-origin: top left;
     min-width: min(260px, calc(100vw - 32px));
+    /* More see-through on a small screen: the category cards behind it
+       stay faintly visible instead of getting fully blocked out. */
+    background: rgba(255, 255, 255, .58);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-color: rgba(255, 255, 255, .7);
   }
+  .sort-option { background: rgba(255, 255, 255, .35); margin-bottom: 3px; }
+  .sort-option:hover, .sort-option:active { background: rgba(255, 255, 255, .65); }
+  .sort-option.active { background: rgba(24, 87, 196, .16); }
 }
 
 .grid {
