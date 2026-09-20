@@ -374,7 +374,7 @@
       var empties = [];
       for (var i = 0; i < 9; i++) if (!state[i]) empties.push(i);
       var roll = Math.random();
-      if (roll < 0.78) {
+      if (roll < 0.85) {
         var best = minimax(state.slice(), "O");
         return best.index;
       }
@@ -461,14 +461,22 @@
       var winner = checkWinner(state);
       if (winner) {
         over = true;
-        status.textContent = vsComputer
-          ? (winner === "X" ? "You win! 🎉" : "The computer wins this one.")
-          : "Player " + (winner === "X" ? "1" : "2") + " (" + winner + ") wins!";
+        var winnerLabel, loserLabel;
+        if (vsComputer) {
+          winnerLabel = winner === "X" ? "You" : "The computer";
+          loserLabel = winner === "X" ? "The computer" : "You";
+          status.textContent = winner === "X" ? "You win! 🎉" : "The computer wins this one.";
+        } else {
+          winnerLabel = "Player " + (winner === "X" ? "1" : "2");
+          loserLabel = "Player " + (winner === "X" ? "2" : "1");
+          status.textContent = winnerLabel + " (" + winner + ") wins!";
+        }
         playerXChip.classList.toggle("winner", winner === "X");
         playerOChip.classList.toggle("winner", winner === "O");
         updateTurnUI();
         var line = winningLine(state);
         if (line) drawWinLine(line);
+        showGameResult(mount, { win: !vsComputer || winner === "X", winnerLabel: winnerLabel, loserLabel: loserLabel });
         return true;
       }
       if (isFull(state)) { over = true; status.textContent = "It's a draw."; updateTurnUI(); return true; }
@@ -643,9 +651,18 @@
 
     function finishGame() {
       board.querySelectorAll(".memory-card").forEach(function (c) { c.disabled = true; });
-      if (scores[0] === scores[1]) status.textContent = "It's a tie, " + scores[0] + " pairs each.";
-      else if (scores[0] > scores[1]) status.textContent = "You win, " + scores[0] + " to " + scores[1] + "!";
-      else status.textContent = (chosenMode === "computer" ? "Computer wins" : "Friend wins") + ", " + scores[1] + " to " + scores[0] + ".";
+      if (scores[0] === scores[1]) {
+        status.textContent = "It's a tie, " + scores[0] + " pairs each.";
+        return;
+      }
+      var opponentLabel = chosenMode === "computer" ? "The computer" : "Friend";
+      if (scores[0] > scores[1]) {
+        status.textContent = "You win, " + scores[0] + " to " + scores[1] + "!";
+        showGameResult(mount, { win: true, winnerLabel: "You", loserLabel: opponentLabel });
+      } else {
+        status.textContent = opponentLabel + " wins, " + scores[1] + " to " + scores[0] + ".";
+        showGameResult(mount, { win: chosenMode !== "computer", winnerLabel: opponentLabel, loserLabel: "You" });
+      }
     }
 
     function flipCard(idx) {
@@ -794,12 +811,12 @@
       var winMove = tryFind("O");
       if (winMove !== null) return winMove;
       var blockMove = tryFind("X");
-      if (blockMove !== null && Math.random() < 0.88) return blockMove;
+      if (blockMove !== null && Math.random() < 0.94) return blockMove;
 
       var weighted = candidates.slice().sort(function (a, b) {
         return Math.abs(a - 3) - Math.abs(b - 3);
       });
-      if (Math.random() < 0.75) return weighted[0];
+      if (Math.random() < 0.85) return weighted[0];
       return candidates[Math.floor(Math.random() * candidates.length)];
     }
 
@@ -1000,16 +1017,29 @@
         var r = +el.dataset.r, c = +el.dataset.c;
         var owner = boxOwner[r][c];
         el.className = "dots-box" + (owner ? " owned " + (owner === "X" ? "mine" : "theirs") : "");
-        el.textContent = owner ? (owner === "X" ? "✕" : "○") : "";
+        el.innerHTML = owner
+          ? (owner === "X"
+            ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>'
+            : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4"><circle cx="12" cy="12" r="7"></circle></svg>')
+          : "";
       });
     }
 
     function checkGameOver() {
       if (claimedBoxes() === totalBoxes()) {
         over = true;
-        if (scores[0] === scores[1]) status.textContent = "It's a tie, " + scores[0] + " boxes each.";
-        else if (scores[0] > scores[1]) status.textContent = "You win, " + scores[0] + " to " + scores[1] + "!";
-        else status.textContent = (vsComputer ? "Computer wins" : "Friend wins") + ", " + scores[1] + " to " + scores[0] + ".";
+        if (scores[0] === scores[1]) {
+          status.textContent = "It's a tie, " + scores[0] + " boxes each.";
+          return true;
+        }
+        var opponentLabel = vsComputer ? "The computer" : "Friend";
+        if (scores[0] > scores[1]) {
+          status.textContent = "You win, " + scores[0] + " to " + scores[1] + "!";
+          showGameResult(mount, { win: true, winnerLabel: "You", loserLabel: opponentLabel });
+        } else {
+          status.textContent = opponentLabel + " wins, " + scores[1] + " to " + scores[0] + ".";
+          showGameResult(mount, { win: !vsComputer, winnerLabel: opponentLabel, loserLabel: "You" });
+        }
         return true;
       }
       return false;

@@ -144,9 +144,21 @@
   background: transparent;
   border-radius: 4px;
   transition: background .2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.dots-box.owned.mine { background: rgba(24, 87, 196, .16); }
-.dots-box.owned.theirs { background: rgba(229, 62, 62, .16); }
+.dots-box svg {
+  width: 46%;
+  height: 46%;
+  animation: dotsMarkIn .22s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes dotsMarkIn {
+  from { transform: scale(.4); opacity: .3; }
+  to { transform: scale(1); opacity: 1; }
+}
+.dots-box.owned.mine { background: rgba(24, 87, 196, .16); color: var(--blue); }
+.dots-box.owned.theirs { background: rgba(229, 62, 62, .16); color: #E53E3E; }
 
 /* ---------- Shared win/lose result overlay (Connect Four etc.) ---------- */
 .game-result-overlay {

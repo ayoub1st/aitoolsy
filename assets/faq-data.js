@@ -45,6 +45,6 @@ const FAQ_ITEMS = [
   },
   {
     q: "Which languages does the site support?",
-    a: "The interface (navigation, menus, and the welcome screens) is available in English, French, Arabic, German, and Spanish. The tool directory, blog, and long-form pages are currently written in English, with broader translation planned as the site grows."
+    a: "A site made for everyone, everywhere.\nOur entire website is fully translatable. Right now, we support five languages: English, French, Arabic, German, and Spanish — with more coming soon, depending on our visitors.\nFive languages today. More tomorrow. One global community, always."
   }
 ];

@@ -505,11 +505,19 @@ html.page-ready body {
   .hero-eyebrow { font-size: 10.5px; margin-bottom: .3em; }
   .hero-title { font-size: clamp(28px, 9vw, 40px); }
   .hero-tagline { font-size: 11.5px; margin-bottom: .6em; }
-  .hero-desc { font-size: 12.5px; line-height: 1.5; margin-bottom: 1.1em; }
+  .hero-desc {
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin-bottom: 1.1em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
   .get-started-btn {
     font-size: 16px;
     padding: 1.15em 2.3em;
-    margin-top: 22px;
+    margin-top: 14px;
     box-shadow: 0 12px 26px rgba(24, 87, 196, .38);
   }
 
