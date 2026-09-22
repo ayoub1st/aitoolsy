@@ -290,8 +290,8 @@ main {
   align-items: flex-end;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 14px 20px;
-  margin: 4px 0 14px;
+  gap: 22px 20px;
+  margin: 22px 0 14px;
 }
 
 .categories-heading h2 {
@@ -324,6 +324,22 @@ main {
 .domain-page-title-icon svg {
   width: 18px;
   height: 18px;
+  display: block;
+}
+
+/* The top-level "Explore by Field" heading needs its own icon treatment —
+   it previously reused the same tile look as the field/category icons
+   right below it, which made it blend in instead of reading as a label. */
+.explore-field-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  color: #16213A;
+}
+.explore-field-icon svg {
+  width: 30px;
+  height: 30px;
   display: block;
 }
 

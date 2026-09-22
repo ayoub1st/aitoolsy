@@ -658,6 +658,29 @@
     );
   }
 
+  // A small, conservative set of closely-related search terms — typing one
+  // of these also surfaces the matching category, even though the word
+  // itself never appears in that category's title or tool text. Kept
+  // narrow on purpose: only near-synonyms people would actually type for
+  // that exact category, not loose topical association.
+  var CATEGORY_SEARCH_SYNONYMS = {
+    "studying": ["school", "université", "university", "college", "classe", "class", "student", "étudiant", "devoir", "homework", "cours", "exam", "examen"],
+    "academic writing & thesis (pfe)": ["thesis", "mémoire", "dissertation", "thèse"],
+    "cv / resume creation": ["cv", "resume", "résumé", "cover letter"],
+    "finding a job & finding employees": ["job", "hire", "recruit", "recrutement", "emploi"],
+    "legal consulting": ["lawyer", "avocat", "law", "contract"],
+    "translation": ["traduire", "traducteur"],
+    "language learning": ["langue", "learn a language"],
+    "fitness / bodybuilding": ["gym", "musculation", "workout"],
+    "medical, veterinary & child-care questions": ["doctor", "médecin", "vet", "vétérinaire", "pediatric"]
+  };
+
+  function categorySynonymMatches(title, q) {
+    var synonyms = CATEGORY_SEARCH_SYNONYMS[title.toLowerCase()];
+    if (!synonyms) return false;
+    return synonyms.some(function (word) { return word.indexOf(q) !== -1; });
+  }
+
   function clearSearch() {
     catEntries.forEach(function (entry) {
       entry.box.classList.remove("search-hidden");
@@ -676,7 +699,7 @@
     var visibleCount = 0;
 
     catEntries.forEach(function (entry) {
-      var titleMatches = entry.title.toLowerCase().indexOf(q) !== -1;
+      var titleMatches = entry.title.toLowerCase().indexOf(q) !== -1 || categorySynonymMatches(entry.title, q);
       var anyToolMatch = false;
 
       entry.tools.forEach(function (tool) {

@@ -97,6 +97,7 @@
   transition: transform .4s cubic-bezier(.22,1,.36,1);
 }
 .game-pick-art svg { width: 100%; height: 100%; }
+.game-pick-art img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .game-pick-card:hover .game-pick-art { transform: scale(1.06) rotate(2deg); }
 
 /* Featured card: spans the first two desktop columns (and both mobile
